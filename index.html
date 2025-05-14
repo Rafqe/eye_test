@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eye Test Adventure! 👀</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Test Progress -->
+      <div class="test-progress">
+        <div class="test-steps">
+          <span id="acuityStep" class="test-step">Visual Acuity</span>
+          <span id="astigmatismStep" class="test-step">Astigmatism</span>
+          <span id="contrastStep" class="test-step">Contrast</span>
+        </div>
+      </div>
+
+      <!-- Welcome Screen -->
+      <div id="welcomeScreen" class="screen">
+        <h1>Welcome to the Vision Test</h1>
+        <div class="instruction-box">
+          <p class="instruction-text">
+            This test will help check your vision. Before we begin, we need to
+            calibrate the test to ensure accurate results.
+          </p>
+          <button onclick="startCalibration()" class="start-button">
+            Start Calibration
+          </button>
+        </div>
+      </div>
+
+      <!-- Calibration Screen -->
+      <div id="calibrationScreen" class="screen hidden">
+        <h2>Size Calibration</h2>
+        <div class="calibration-container">
+          <div class="calibration-section">
+            <h3>Standardized Size Reference</h3>
+            <div class="size-reference">
+              <p class="instruction-text">
+                For accurate test results, we need to calibrate the test size to
+                match standard medical testing conditions. Please use a standard
+                credit card (85.6mm × 53.98mm) as a reference.
+              </p>
+              <div class="calibration-grid">
+                <div class="reference-container">
+                  <div id="cardReference" class="card-reference"></div>
+                  <p class="reference-label">Reference Size</p>
+                </div>
+                <div class="controls-container">
+                  <div class="size-controls">
+                    <div class="size-display">
+                      <span id="sizeValue">100%</span>
+                      <span class="size-label">Scale Factor</span>
+                    </div>
+                    <input
+                      type="range"
+                      id="sizeSlider"
+                      min="50"
+                      max="200"
+                      value="100"
+                      step="1"
+                      class="size-slider"
+                    />
+                    <div class="size-buttons">
+                      <button
+                        onclick="adjustSize('smaller')"
+                        class="calibration-btn"
+                      >
+                        -
+                      </button>
+                      <button
+                        onclick="adjustSize('larger')"
+                        class="calibration-btn"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <p class="calibration-note">
+                    Adjust until the reference box matches your credit card size
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="start-button" onclick="finishCalibration()">
+            Proceed to Test
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Eye Instructions -->
+      <div id="rightEyeInstructions" class="screen hidden">
+        <h1>Eye Test Adventure! 👀</h1>
+        <div class="instruction-box">
+          <p class="instruction-text">
+            Let's test your right eye first! Here's what to do:
+          </p>
+          <ul class="instruction-list">
+            <li>Cover your left eye with your hand ✋</li>
+            <li>Stand 1 meter away from the screen</li>
+            <li>You'll see a letter E pointing in different directions</li>
+            <li>
+              Click the arrow button that matches the direction the E is
+              pointing
+            </li>
+            <li>You'll have multiple attempts at each size</li>
+            <li>Try your best to identify the direction correctly!</li>
+          </ul>
+          <button onclick="startTest()" class="start-button">
+            Start the Adventure! 🚀
+          </button>
+        </div>
+      </div>
+
+      <!-- Left Eye Instructions -->
+      <div id="leftEyeInstructions" class="screen hidden">
+        <h1>Eye Test Adventure! 👀</h1>
+        <div class="instruction-box">
+          <p class="instruction-text">
+            Great job with your right eye! Now let's test your left eye:
+          </p>
+          <ul class="instruction-list">
+            <li>Cover your right eye with your hand ✋</li>
+            <li>Stay 1 meter away from the screen</li>
+            <li>You'll see the same letter E test</li>
+            <li>
+              Click the arrow button that matches the direction the E is
+              pointing
+            </li>
+            <li>You'll have multiple attempts at each size</li>
+            <li>Try your best to identify the direction correctly!</li>
+          </ul>
+          <button onclick="startLeftEyeTest()" class="start-button">
+            Continue the Adventure! 🚀
+          </button>
+        </div>
+      </div>
+
+      <!-- Visual Acuity Test Screen -->
+      <div id="testScreen" class="screen hidden">
+        <h1>Eye Test Adventure! 👀</h1>
+        <div class="test-area">
+          <div class="letter-container">
+            <img src="assets/E.png" alt="Letter E" id="letterE" />
+          </div>
+          <div class="controls">
+            <p class="question">Which way is the letter E pointing? 🤔</p>
+            <div class="buttons">
+              <button onclick="checkAnswer('up')" class="direction-btn">
+                ⬆️
+              </button>
+              <button onclick="checkAnswer('right')" class="direction-btn">
+                ➡️
+              </button>
+              <button onclick="checkAnswer('down')" class="direction-btn">
+                ⬇️
+              </button>
+              <button onclick="checkAnswer('left')" class="direction-btn">
+                ⬅️
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Astigmatism Test Instructions -->
+      <div id="astigmatismInstructions" class="screen hidden">
+        <h1>Astigmatism Test 👁️</h1>
+        <div class="instruction-box">
+          <p class="instruction-text">
+            Now let's check for astigmatism! Cover your right eye first ✋
+          </p>
+          <button onclick="startAstigmatismTest()" class="start-button">
+            Start Test! 🚀
+          </button>
+        </div>
+      </div>
+
+      <!-- Left Eye Astigmatism Instructions -->
+      <div id="leftEyeAstigmatismInstructions" class="screen hidden">
+        <h1>Astigmatism Test 👁️</h1>
+        <div class="instruction-box">
+          <p class="instruction-text">
+            Great job! Now, cover your left eye with your hand ✋
+          </p>
+          <button onclick="startLeftEyeAstigmatismTest()" class="start-button">
+            Continue Test! 🚀
+          </button>
+        </div>
+      </div>
+
+      <!-- Astigmatism Test Screen -->
+      <div id="astigmatismTest" class="screen hidden">
+        <h1>Astigmatism Test 👁️</h1>
+        <div class="test-area">
+          <div class="letter-container">
+            <img
+              src="assets/astmatism.png"
+              alt="Astigmatism Test"
+              id="astigmatismImage"
+            />
+          </div>
+          <div class="controls">
+            <p class="question">Are all the lines equally dark and clear? 🤔</p>
+            <div class="buttons">
+              <button
+                onclick="handleAstigmatismAnswer(true)"
+                class="answer-btn"
+              >
+                Yes ✅
+              </button>
+              <button
+                onclick="handleAstigmatismAnswer(false)"
+                class="answer-btn"
+              >
+                No ❌
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contrast Test Screen -->
+      <div id="contrastTest" class="screen hidden">
+        <h1>Contrast Sensitivity Test 👁️</h1>
+        <div class="test-area">
+          <div class="contrast-container">
+            <img
+              src="assets/contrast.png"
+              alt="Contrast Test"
+              id="contrastImage"
+            />
+          </div>
+          <div class="controls">
+            <p class="question">Can you see the pattern clearly? 🤔</p>
+            <div class="buttons">
+              <button onclick="handleContrastAnswer(true)" class="answer-btn">
+                Yes ✅
+              </button>
+              <button onclick="handleContrastAnswer(false)" class="answer-btn">
+                No ❌
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Eye Contrast Instructions -->
+      <div id="rightEyeContrastInstructions" class="screen hidden">
+        <h1>Contrast Test 👁️</h1>
+        <div class="instruction-box">
+          <p class="instruction-text">
+            Let's test your contrast sensitivity! Cover your left eye with your
+            hand ✋
+          </p>
+          <button onclick="startContrastTest()" class="start-button">
+            Start Test! 🚀
+          </button>
+        </div>
+      </div>
+
+      <!-- Left Eye Contrast Instructions -->
+      <div id="leftEyeContrastInstructions" class="screen hidden">
+        <h1>Contrast Test 👁️</h1>
+        <div class="instruction-box">
+          <p class="instruction-text">
+            Great job! Now, cover your right eye with your hand ✋
+          </p>
+          <button onclick="startLeftEyeContrastTest()" class="start-button">
+            Continue Test! 🚀
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Screen -->
+      <div id="resultsScreen" class="screen hidden">
+        <h1>Your Adventure Results! 🏆</h1>
+        <div class="results-container">
+          <div class="test-results">
+            <h2>Visual Acuity Test 👁️</h2>
+            <div class="eye-results">
+              <h3>Right Eye</h3>
+              <p>Correct: <span id="rightEyeCorrect">0</span> ✅</p>
+              <p>Incorrect: <span id="rightEyeIncorrect">0</span> ❌</p>
+              <p>Result: <span id="rightEyeAcuity">-</span></p>
+            </div>
+            <div class="eye-results">
+              <h3>Left Eye</h3>
+              <p>Correct: <span id="leftEyeCorrect">0</span> ✅</p>
+              <p>Incorrect: <span id="leftEyeIncorrect">0</span> ❌</p>
+              <p>Result: <span id="leftEyeAcuity">-</span></p>
+            </div>
+          </div>
+          <div class="test-results">
+            <h2>Astigmatism Test 👁️</h2>
+            <div class="eye-results">
+              <h3>Right Eye</h3>
+              <p>Result: <span id="rightEyeAstigmatism">-</span></p>
+            </div>
+            <div class="eye-results">
+              <h3>Left Eye</h3>
+              <p>Result: <span id="leftEyeAstigmatism">-</span></p>
+            </div>
+          </div>
+          <div class="test-results">
+            <h2>Contrast Sensitivity Test 👁️</h2>
+            <div class="eye-results">
+              <h3>Right Eye</h3>
+              <p>Correct: <span id="rightEyeContrastCorrect">0</span> ✅</p>
+              <p>Incorrect: <span id="rightEyeContrastIncorrect">0</span> ❌</p>
+              <p>Result: <span id="rightEyeContrast">-</span></p>
+            </div>
+            <div class="eye-results">
+              <h3>Left Eye</h3>
+              <p>Correct: <span id="leftEyeContrastCorrect">0</span> ✅</p>
+              <p>Incorrect: <span id="leftEyeContrastIncorrect">0</span> ❌</p>
+              <p>Result: <span id="leftEyeContrast">-</span></p>
+            </div>
+          </div>
+          <button onclick="restartTest()" class="restart-button">
+            Play Again! 🎮
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -710,14 +710,56 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.getElementById("welcomeScreen").classList.remove("hidden");
 
-  // Initialize size slider
+  // Initialize size slider with adjusted scale
   const sizeSlider = document.getElementById("sizeSlider");
+  const cardReference = document.getElementById("cardReference");
+  const baseScale = 1.014; // The current 1.014 becomes our new 100%
+
+  function updateScale(value) {
+    // Convert percentage to scale (70% = 0.7, 100% = 1.0, 130% = 1.3)
+    const scale = value / 100;
+    currentSize = baseScale * scale;
+
+    // Update the display
+    document.getElementById("sizeValue").textContent = `${value}%`;
+
+    // Apply the transform
+    const transform = `scale(${currentSize})`;
+    cardReference.style.transform = transform;
+
+    // Debug output
+    console.log("Updating scale:", {
+      value,
+      scale,
+      currentSize,
+      transform,
+    });
+  }
+
+  // Add input event listener
   sizeSlider.addEventListener("input", function () {
-    currentSize = this.value / 100;
-    document.getElementById("sizeValue").textContent = `${this.value}%`;
-    document.getElementById(
-      "cardReference"
-    ).style.transform = `scale(${currentSize})`;
+    const value = parseInt(this.value);
+    updateScale(value);
+  });
+
+  // Add change event listener for when slider is released
+  sizeSlider.addEventListener("change", function () {
+    const value = parseInt(this.value);
+    updateScale(value);
+  });
+
+  // Set initial values
+  sizeSlider.value = 100;
+  currentSize = baseScale;
+  updateScale(100);
+
+  // Add keyboard controls for fine-tuning
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") {
+      adjustSize("smaller");
+    } else if (e.key === "ArrowRight") {
+      adjustSize("larger");
+    }
   });
 });
 
@@ -726,9 +768,9 @@ function adjustSize(direction) {
   const currentValue = parseInt(sizeSlider.value);
 
   if (direction === "larger") {
-    sizeSlider.value = Math.min(200, currentValue + 1);
+    sizeSlider.value = Math.min(130, currentValue + 1);
   } else {
-    sizeSlider.value = Math.max(50, currentValue - 1);
+    sizeSlider.value = Math.max(70, currentValue - 1);
   }
 
   // Trigger the input event to update the display

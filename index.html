@@ -33,60 +33,28 @@
 
       <!-- Calibration Screen -->
       <div id="calibrationScreen" class="screen hidden">
-        <h2>Size Calibration</h2>
+        <h1>Size Calibration 👁️</h1>
         <div class="calibration-container">
-          <div class="calibration-section">
-            <h3>Standardized Size Reference</h3>
-            <div class="size-reference">
-              <p class="instruction-text">
-                For accurate test results, we need to calibrate the test size to
-                match standard medical testing conditions. Please use a standard
-                credit card (85.6mm × 53.98mm) as a reference.
-              </p>
-              <div class="calibration-grid">
-                <div class="reference-container">
-                  <div id="cardReference" class="card-reference"></div>
-                  <p class="reference-label">Reference Size</p>
-                </div>
-                <div class="controls-container">
-                  <div class="size-controls">
-                    <div class="size-display">
-                      <span id="sizeValue">100%</span>
-                      <span class="size-label">Scale Factor</span>
-                    </div>
-                    <input
-                      type="range"
-                      id="sizeSlider"
-                      min="50"
-                      max="200"
-                      value="100"
-                      step="1"
-                      class="size-slider"
-                    />
-                    <div class="size-buttons">
-                      <button
-                        onclick="adjustSize('smaller')"
-                        class="calibration-btn"
-                      >
-                        -
-                      </button>
-                      <button
-                        onclick="adjustSize('larger')"
-                        class="calibration-btn"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <p class="calibration-note">
-                    Adjust until the reference box matches your credit card size
-                  </p>
-                </div>
-              </div>
+          <div class="reference-container">
+            <div id="cardReference" class="card-reference"></div>
+            <div class="size-controls">
+              <input
+                type="range"
+                id="sizeSlider"
+                min="70"
+                max="130"
+                value="100"
+                step="1"
+              />
+              <span id="sizeValue" class="size-value">100%</span>
             </div>
           </div>
-          <button class="start-button" onclick="finishCalibration()">
-            Proceed to Test
+          <p class="calibration-note">
+            Adjust the size until the reference card matches your credit card
+            size
+          </p>
+          <button onclick="finishCalibration()" class="start-button">
+            Continue
           </button>
         </div>
       </div>

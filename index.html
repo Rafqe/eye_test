@@ -3,297 +3,549 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eye Test Adventure! 👀</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="shortcut icon"
+      href="assets/Amblify_logo_noText.png"
+      type="image/x-icon"
+    />
+    <title>Amblyfy - Eye Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-dark-blue": "#144475",
+              "brand-cyan": "#00AEC2",
+              "brand-dark-green": "#007262",
+              "brand-light-green": "#75BC7E",
+              "brand-yellow": "#E1DB1D",
+              "brand-pale-green": "#CAD76A",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
-    <div class="container">
-      <!-- Test Progress -->
-      <div class="test-progress">
-        <div class="test-steps">
-          <span id="acuityStep" class="test-step">Visual Acuity</span>
-          <span id="astigmatismStep" class="test-step">Astigmatism</span>
-          <span id="contrastStep" class="test-step">Contrast</span>
-        </div>
-      </div>
+  <body class="font-['Inter'] min-h-screen flex flex-col bg-gray-50">
+    <!-- Navbar -->
+    <header
+      class="bg-white shadow-md py-4 px-6 md:px-12 fixed w-full z-10 top-0"
+    >
+      <nav class="container mx-auto flex justify-between items-center">
+        <a
+          href="/"
+          class="text-2xl font-bold text-brand-dark-blue rounded-md p-2 hover:bg-gray-100 transition-colors"
+        >
+          <img
+            src="assets/Amblify_logo_zilsfix.png"
+            alt="Amblyfy"
+            class="h-10"
+          />
+        </a>
 
-      <!-- Welcome Screen -->
-      <div id="welcomeScreen" class="screen">
-        <h1>Welcome to the Vision Test</h1>
-        <div class="instruction-box">
-          <p class="instruction-text">
-            This test will help check your vision. Before we begin, we need to
-            calibrate the test to ensure accurate results.
-          </p>
-          <button onclick="startCalibration()" class="start-button">
-            Start Calibration
+        <div class="hidden md:flex space-x-6">
+          <a
+            href="/"
+            class="text-gray-600 hover:text-brand-dark-blue font-medium transition-colors rounded-md px-3 py-2"
+            >Home</a
+          >
+          <a
+            href="/#steps"
+            class="text-gray-600 hover:text-brand-dark-blue font-medium transition-colors rounded-md px-3 py-2"
+            >Steps</a
+          >
+          <a
+            href="/#about"
+            class="text-gray-600 hover:text-brand-dark-blue font-medium transition-colors rounded-md px-3 py-2"
+            >About Us</a
+          >
+          <a
+            href="/#contact"
+            class="text-gray-600 hover:text-brand-dark-blue font-medium transition-colors rounded-md px-3 py-2"
+            >Contact</a
+          >
+        </div>
+
+        <button
+          id="mobile-menu-button"
+          class="md:hidden text-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-dark-blue rounded-md p-2"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+      </nav>
+
+      <div
+        id="mobile-menu"
+        class="md:hidden hidden bg-white py-2 mt-2 border-t border-gray-200"
+      >
+        <a
+          href="/"
+          class="block px-4 py-2 text-gray-700 hover:bg-brand-pale-green hover:text-brand-dark-blue transition-colors rounded-md mx-2"
+          >Home</a
+        >
+        <a
+          href="/#steps"
+          class="block px-4 py-2 text-gray-700 hover:bg-brand-pale-green hover:text-brand-dark-blue transition-colors rounded-md mx-2"
+          >Steps</a
+        >
+        <a
+          href="/#about"
+          class="block px-4 py-2 text-gray-700 hover:bg-brand-pale-green hover:text-brand-dark-blue transition-colors rounded-md mx-2"
+          >About Us</a
+        >
+        <a
+          href="/#contact"
+          class="block px-4 py-2 text-gray-700 hover:bg-brand-pale-green hover:text-brand-dark-blue transition-colors rounded-md mx-2"
+          >Contact</a
+        >
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main
+      class="flex-1 pt-20 pb-16 bg-cover bg-center bg-no-repeat"
+      style="background-image: url('assets/fons.png')"
+    >
+      <div class="container mx-auto px-4 py-8">
+        <!-- Welcome Screen -->
+        <div
+          class="bg-white rounded-xl shadow-lg p-8 relative"
+          id="mainContainer"
+        >
+          <button
+            id="fullscreenButton"
+            class="absolute top-4 right-4 p-2 text-gray-600 hover:text-brand-dark-blue transition-colors focus:outline-none"
+            title="Toggle Fullscreen"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"
+              ></path>
+            </svg>
           </button>
-        </div>
-      </div>
+          <div class="text-center space-y-6">
+            <h1 class="text-4xl font-bold text-brand-dark-blue">
+              Welcome to Amblyfy Eye Test
+            </h1>
+            <p class="text-lg text-gray-600">
+              We are glad You decided to check your vision. It's the first step
+              to fixing if anything is not as you like.
+            </p>
 
-      <!-- Calibration Screen -->
-      <div id="calibrationScreen" class="screen hidden">
-        <h1>Size Calibration 👁️</h1>
-        <div class="calibration-container">
-          <div class="reference-container">
-            <div id="cardReference" class="card-reference"></div>
-            <div class="size-controls">
-              <input
-                type="range"
-                id="sizeSlider"
-                min="70"
-                max="130"
-                value="100"
-                step="1"
-              />
-              <span id="sizeValue" class="size-value">100%</span>
+            <div class="space-y-4 text-gray-600">
+              <p>This eye test will help you:</p>
+              <ul class="space-y-2">
+                <li>• Check your visual acuity</li>
+                <li>• Test for astigmatism</li>
+                <li>• Measure contrast sensitivity</li>
+                <li>• Get personalized recommendations</li>
+              </ul>
+              <p class="mt-4">
+                The test takes about 5-10 minutes to complete. Make sure you're
+                in a well-lit room and have your reading glasses ready if you
+                use them.
+              </p>
             </div>
-          </div>
-          <p class="calibration-note">
-            Adjust the size until the reference card matches your credit card
-            size
-          </p>
-          <button onclick="finishCalibration()" class="start-button">
-            Continue
-          </button>
-        </div>
-      </div>
-
-      <!-- Right Eye Instructions -->
-      <div id="rightEyeInstructions" class="screen hidden">
-        <h1>Eye Test Adventure! 👀</h1>
-        <div class="instruction-box">
-          <p class="instruction-text">
-            Let's test your right eye first! Here's what to do:
-          </p>
-          <ul class="instruction-list">
-            <li>Cover your left eye with your hand ✋</li>
-            <li>Stand 1 meter away from the screen</li>
-            <li>You'll see a letter E pointing in different directions</li>
-            <li>
-              Click the arrow button that matches the direction the E is
-              pointing
-            </li>
-            <li>You'll have multiple attempts at each size</li>
-            <li>Try your best to identify the direction correctly!</li>
-          </ul>
-          <button onclick="startTest()" class="start-button">
-            Start the Adventure! 🚀
-          </button>
-        </div>
-      </div>
-
-      <!-- Left Eye Instructions -->
-      <div id="leftEyeInstructions" class="screen hidden">
-        <h1>Eye Test Adventure! 👀</h1>
-        <div class="instruction-box">
-          <p class="instruction-text">
-            Great job with your right eye! Now let's test your left eye:
-          </p>
-          <ul class="instruction-list">
-            <li>Cover your right eye with your hand ✋</li>
-            <li>Stay 1 meter away from the screen</li>
-            <li>You'll see the same letter E test</li>
-            <li>
-              Click the arrow button that matches the direction the E is
-              pointing
-            </li>
-            <li>You'll have multiple attempts at each size</li>
-            <li>Try your best to identify the direction correctly!</li>
-          </ul>
-          <button onclick="startLeftEyeTest()" class="start-button">
-            Continue the Adventure! 🚀
-          </button>
-        </div>
-      </div>
-
-      <!-- Visual Acuity Test Screen -->
-      <div id="testScreen" class="screen hidden">
-        <h1>Eye Test Adventure! 👀</h1>
-        <div class="test-area">
-          <div class="letter-container">
-            <img src="assets/E.png" alt="Letter E" id="letterE" />
-          </div>
-          <div class="controls">
-            <p class="question">Which way is the letter E pointing? 🤔</p>
-            <div class="buttons">
-              <button onclick="checkAnswer('up')" class="direction-btn">
-                ⬆️
-              </button>
-              <button onclick="checkAnswer('right')" class="direction-btn">
-                ➡️
-              </button>
-              <button onclick="checkAnswer('down')" class="direction-btn">
-                ⬇️
-              </button>
-              <button onclick="checkAnswer('left')" class="direction-btn">
-                ⬅️
-              </button>
+            <div class="bg-brand-pale-green/20 p-4 rounded-lg">
+              <p class="text-lg font-medium text-brand-dark-blue">
+                Once you are ready to start, let's enter fullscreen
+              </p>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Astigmatism Test Instructions -->
-      <div id="astigmatismInstructions" class="screen hidden">
-        <h1>Astigmatism Test 👁️</h1>
-        <div class="instruction-box">
-          <p class="instruction-text">
-            Now let's check for astigmatism! Cover your right eye first ✋
-          </p>
-          <button onclick="startAstigmatismTest()" class="start-button">
-            Start Test! 🚀
-          </button>
-        </div>
-      </div>
-
-      <!-- Left Eye Astigmatism Instructions -->
-      <div id="leftEyeAstigmatismInstructions" class="screen hidden">
-        <h1>Astigmatism Test 👁️</h1>
-        <div class="instruction-box">
-          <p class="instruction-text">
-            Great job! Now, cover your left eye with your hand ✋
-          </p>
-          <button onclick="startLeftEyeAstigmatismTest()" class="start-button">
-            Continue Test! 🚀
-          </button>
-        </div>
-      </div>
-
-      <!-- Astigmatism Test Screen -->
-      <div id="astigmatismTest" class="screen hidden">
-        <h1>Astigmatism Test 👁️</h1>
-        <div class="test-area">
-          <div class="letter-container">
-            <img
-              src="assets/astmatism.png"
-              alt="Astigmatism Test"
-              id="astigmatismImage"
-            />
-          </div>
-          <div class="controls">
-            <p class="question">Are all the lines equally dark and clear? 🤔</p>
-            <div class="buttons">
+            <div class="pt-8">
               <button
-                onclick="handleAstigmatismAnswer(true)"
-                class="answer-btn"
+                onclick="enterFullscreen()"
+                class="bg-brand-dark-blue text-white py-3 px-8 rounded-lg hover:bg-brand-cyan transition-all transform hover:-translate-y-1 text-xl font-semibold"
               >
-                Yes ✅
+                LET'S GO
               </button>
-              <button
-                onclick="handleAstigmatismAnswer(false)"
-                class="answer-btn"
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Fullscreen Content -->
+    <div
+      id="fullscreenContent"
+      class="fixed inset-0 bg-white items-center justify-center z-50 hidden"
+    >
+      <div
+        class="relative w-full h-full flex flex-col items-center justify-center"
+      >
+        <button
+          onclick="exitFullscreen()"
+          class="absolute top-4 right-4 p-2 text-gray-600 hover:text-brand-dark-blue transition-colors focus:outline-none"
+          title="Exit Fullscreen"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"
+            ></path>
+          </svg>
+        </button>
+        <h2 class="text-4xl font-bold text-brand-dark-blue mb-8">
+          Calibration Screen
+        </h2>
+        <button
+          onclick="startTest()"
+          class="bg-brand-dark-blue text-white py-3 px-8 rounded-lg hover:bg-brand-cyan transition-all transform hover:-translate-y-1 text-xl font-semibold"
+        >
+          Start Test
+        </button>
+      </div>
+    </div>
+
+    <!-- Test Content -->
+    <div
+      id="testContent"
+      class="fixed inset-0 bg-white items-center justify-center z-50 hidden"
+    >
+      <div
+        class="relative w-full h-full flex flex-col items-center justify-center p-8"
+      >
+        <button
+          onclick="exitFullscreen()"
+          class="absolute top-4 right-4 p-2 text-gray-600 hover:text-brand-dark-blue transition-colors focus:outline-none"
+          title="Exit Fullscreen"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"
+            ></path>
+          </svg>
+        </button>
+        <div class="max-w-3xl text-center space-y-8">
+          <h2 class="text-4xl font-bold text-brand-dark-blue">
+            Visual Acuity Test
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Instructions Column -->
+            <div class="bg-brand-pale-green/20 p-6 rounded-lg">
+              <h3 class="text-xl font-semibold text-brand-dark-blue mb-4">
+                Instructions:
+              </h3>
+              <ul class="text-left space-y-3">
+                <li>• Cover your left eye with your hand.</li>
+                <li>• You'll be shown letter E in different sizes</li>
+                <li>• Press the button in which direction the E is pointing</li>
+                <li>
+                  • If you're not sure about a letter, make your best guess
+                </li>
+              </ul>
+            </div>
+
+            <!-- Test Demonstration Animation -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+              <h3 class="text-xl font-semibold text-brand-dark-blue mb-4">
+                Watch How to Do the Test:
+              </h3>
+              <div
+                class="relative aspect-square bg-gray-100 rounded-lg overflow-hidden"
               >
-                No ❌
-              </button>
+                <!-- Animation Container -->
+                <div
+                  id="testDemo"
+                  class="absolute inset-0 flex items-center justify-center"
+                >
+                  <!-- E Letter Animation -->
+                  <div
+                    id="letterDemo"
+                    class="text-6xl font-bold text-brand-dark-blue transform transition-all duration-1000"
+                  >
+                    E
+                  </div>
+                  <!-- Direction Buttons -->
+                  <div
+                    id="directionButtons"
+                    class="absolute inset-0 pointer-events-none"
+                  >
+                    <!-- Top Button -->
+                    <button
+                      id="topButton"
+                      class="absolute top-8 left-[38%] -translate-x-1/2 px-6 py-3 bg-white rounded-lg shadow-md hover:bg-brand-pale-green transition-all transform scale-0 transition-transform duration-300 text-2xl font-semibold text-brand-dark-blue border-2 border-gray-200"
+                    >
+                      ↑
+                    </button>
+                    <!-- Right Button -->
+                    <button
+                      id="rightButton"
+                      class="absolute top-[37%] right-8 -translate-y-1/2 px-3 py-6 bg-white rounded-lg shadow-md hover:bg-brand-pale-green transition-all transform scale-0 transition-transform duration-300 text-2xl font-semibold text-brand-dark-blue border-2 border-gray-200"
+                    >
+                      →
+                    </button>
+                    <!-- Bottom Button -->
+                    <button
+                      id="bottomButton"
+                      class="absolute bottom-8 left-[38%] -translate-x-1/2 px-6 py-3 bg-white rounded-lg shadow-md hover:bg-brand-pale-green transition-all transform scale-0 transition-transform duration-300 text-2xl font-semibold text-brand-dark-blue border-2 border-gray-200"
+                    >
+                      ↓
+                    </button>
+                    <!-- Left Button -->
+                    <button
+                      id="leftButton"
+                      class="absolute top-[37%] left-8 -translate-y-1/2 px-3 py-6 bg-white rounded-lg shadow-md hover:bg-brand-pale-green transition-all transform scale-0 transition-transform duration-300 text-2xl font-semibold text-brand-dark-blue border-2 border-gray-200"
+                    >
+                      ←
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Contrast Test Screen -->
-      <div id="contrastTest" class="screen hidden">
-        <h1>Contrast Sensitivity Test 👁️</h1>
-        <div class="test-area">
-          <div class="contrast-container">
-            <img
-              src="assets/contrast.png"
-              alt="Contrast Test"
-              id="contrastImage"
-            />
-          </div>
-          <div class="controls">
-            <p class="question">Can you see the pattern clearly? 🤔</p>
-            <div class="buttons">
-              <button onclick="handleContrastAnswer(true)" class="answer-btn">
-                Yes ✅
-              </button>
-              <button onclick="handleContrastAnswer(false)" class="answer-btn">
-                No ❌
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Eye Contrast Instructions -->
-      <div id="rightEyeContrastInstructions" class="screen hidden">
-        <h1>Contrast Test 👁️</h1>
-        <div class="instruction-box">
-          <p class="instruction-text">
-            Let's test your contrast sensitivity! Cover your left eye with your
-            hand ✋
+          <p class="text-lg mt-6">
+            When you're ready, click the button below to begin the test with
+            right eye.
           </p>
-          <button onclick="startContrastTest()" class="start-button">
-            Start Test! 🚀
-          </button>
-        </div>
-      </div>
-
-      <!-- Left Eye Contrast Instructions -->
-      <div id="leftEyeContrastInstructions" class="screen hidden">
-        <h1>Contrast Test 👁️</h1>
-        <div class="instruction-box">
-          <p class="instruction-text">
-            Great job! Now, cover your right eye with your hand ✋
-          </p>
-          <button onclick="startLeftEyeContrastTest()" class="start-button">
-            Continue Test! 🚀
-          </button>
-        </div>
-      </div>
-
-      <!-- Results Screen -->
-      <div id="resultsScreen" class="screen hidden">
-        <h1>Your Adventure Results! 🏆</h1>
-        <div class="results-container">
-          <div class="test-results">
-            <h2>Visual Acuity Test 👁️</h2>
-            <div class="eye-results">
-              <h3>Right Eye</h3>
-              <p>Correct: <span id="rightEyeCorrect">0</span> ✅</p>
-              <p>Incorrect: <span id="rightEyeIncorrect">0</span> ❌</p>
-              <p>Result: <span id="rightEyeAcuity">-</span></p>
-            </div>
-            <div class="eye-results">
-              <h3>Left Eye</h3>
-              <p>Correct: <span id="leftEyeCorrect">0</span> ✅</p>
-              <p>Incorrect: <span id="leftEyeIncorrect">0</span> ❌</p>
-              <p>Result: <span id="leftEyeAcuity">-</span></p>
-            </div>
-          </div>
-          <div class="test-results">
-            <h2>Astigmatism Test 👁️</h2>
-            <div class="eye-results">
-              <h3>Right Eye</h3>
-              <p>Result: <span id="rightEyeAstigmatism">-</span></p>
-            </div>
-            <div class="eye-results">
-              <h3>Left Eye</h3>
-              <p>Result: <span id="leftEyeAstigmatism">-</span></p>
-            </div>
-          </div>
-          <div class="test-results">
-            <h2>Contrast Sensitivity Test 👁️</h2>
-            <div class="eye-results">
-              <h3>Right Eye</h3>
-              <p>Correct: <span id="rightEyeContrastCorrect">0</span> ✅</p>
-              <p>Incorrect: <span id="rightEyeContrastIncorrect">0</span> ❌</p>
-              <p>Result: <span id="rightEyeContrast">-</span></p>
-            </div>
-            <div class="eye-results">
-              <h3>Left Eye</h3>
-              <p>Correct: <span id="leftEyeContrastCorrect">0</span> ✅</p>
-              <p>Incorrect: <span id="leftEyeContrastIncorrect">0</span> ❌</p>
-              <p>Result: <span id="leftEyeContrast">-</span></p>
-            </div>
-          </div>
-          <button onclick="restartTest()" class="restart-button">
-            Play Again! 🎮
+          <button
+            onclick="startAcuityTest()"
+            class="bg-brand-dark-blue text-white py-3 px-8 rounded-lg hover:bg-brand-cyan transition-all transform hover:-translate-y-1 text-xl font-semibold"
+          >
+            Test Yourself
           </button>
         </div>
       </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col items-center space-y-4">
+          <div class="flex space-x-6">
+            <a
+              href="#"
+              class="text-gray-600 hover:text-brand-dark-blue transition-colors"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                />
+              </svg>
+            </a>
+            <a
+              href="#"
+              class="text-gray-600 hover:text-brand-dark-blue transition-colors"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
+                />
+              </svg>
+            </a>
+            <a
+              href="#"
+              class="text-gray-600 hover:text-brand-dark-blue transition-colors"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
+                />
+              </svg>
+            </a>
+          </div>
+          <p class="text-gray-600">&copy; 2025 Amblyfy. All rights reserved.</p>
+          <div class="flex space-x-4 text-sm">
+            <a
+              href="/privacy"
+              class="text-gray-600 hover:text-brand-dark-blue transition-colors"
+              >Privacy Policy</a
+            >
+            <a
+              href="/terms"
+              class="text-gray-600 hover:text-brand-dark-blue transition-colors"
+              >Terms of Service</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const fullscreenContent = document.getElementById("fullscreenContent");
+      const testContent = document.getElementById("testContent");
+      const mainContainer = document.getElementById("mainContainer");
+
+      mobileMenuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      // Function to enter fullscreen
+      function enterFullscreen() {
+        fullscreenContent.classList.remove("hidden");
+        fullscreenContent.classList.add("flex");
+        mainContainer.classList.add("hidden");
+        document.documentElement.requestFullscreen().catch((err) => {
+          console.log(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      }
+
+      // Function to exit fullscreen
+      function exitFullscreen() {
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        }
+      }
+
+      // Function to start the test
+      function startTest() {
+        fullscreenContent.classList.add("hidden");
+        fullscreenContent.classList.remove("flex");
+        testContent.classList.remove("hidden");
+        testContent.classList.add("flex");
+      }
+
+      // Function to start the acuity test
+      function startAcuityTest() {
+        // This will be implemented later
+        console.log("Starting acuity test...");
+      }
+
+      // Handle fullscreen changes
+      document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement) {
+          fullscreenContent.classList.add("hidden");
+          fullscreenContent.classList.remove("flex");
+          testContent.classList.add("hidden");
+          testContent.classList.remove("flex");
+          mainContainer.classList.remove("hidden");
+        }
+      });
+
+      // Add click handler for the fullscreen button
+      document
+        .getElementById("fullscreenButton")
+        .addEventListener("click", () => {
+          if (!document.fullscreenElement) {
+            enterFullscreen();
+          } else {
+            exitFullscreen();
+          }
+        });
+
+      // Function to play the test demonstration
+      function playDemo() {
+        const letterDemo = document.getElementById("letterDemo");
+        const topButton = document.getElementById("topButton");
+        const rightButton = document.getElementById("rightButton");
+        const bottomButton = document.getElementById("bottomButton");
+        const leftButton = document.getElementById("leftButton");
+
+        // Reset animations
+        letterDemo.style.transform = "rotate(0deg)";
+        [topButton, rightButton, bottomButton, leftButton].forEach((btn) => {
+          btn.style.transform = "scale(0)";
+          btn.classList.remove("bg-brand-pale-green", "bg-red-300");
+        });
+
+        // Show all buttons
+        setTimeout(() => {
+          [topButton, rightButton, bottomButton, leftButton].forEach((btn) => {
+            btn.style.transform = "scale(1)";
+          });
+        }, 1000);
+
+        // Rotate E and press corresponding button
+        const directions = [
+          { rotation: "0deg", button: topButton, correct: false },
+          { rotation: "90deg", button: rightButton, correct: true },
+          { rotation: "180deg", button: bottomButton, correct: true },
+          { rotation: "270deg", button: leftButton, correct: true },
+        ];
+
+        directions.forEach((direction, index) => {
+          // Rotate E and press button
+          setTimeout(() => {
+            letterDemo.style.transform = `rotate(${direction.rotation})`;
+            direction.button.classList.add(
+              direction.correct ? "bg-brand-pale-green" : "bg-red-300"
+            );
+          }, 2000 + index * 2000);
+
+          // Reset button
+          setTimeout(() => {
+            direction.button.classList.remove(
+              "bg-brand-pale-green",
+              "bg-red-300"
+            );
+          }, 2500 + index * 2000);
+        });
+
+        // Reset for next play
+        setTimeout(() => {
+          letterDemo.style.transform = "rotate(0deg)";
+          [topButton, rightButton, bottomButton, leftButton].forEach((btn) => {
+            btn.style.transform = "scale(0)";
+            btn.classList.remove("bg-brand-pale-green", "bg-red-300");
+          });
+        }, 10000);
+      }
+
+      // Start the demo automatically and loop it
+      playDemo();
+      setInterval(playDemo, 10000);
+    </script>
   </body>
 </html>
